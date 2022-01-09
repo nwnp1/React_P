@@ -34,8 +34,7 @@ class App extends Component {
       <header>
           <h1><a href="/" onClick={function (e) {
             console.log(e);
-            debugger;
-            alert("hi");
+            e.preventDefault();
           }}>{this.state.subject.title}</a>
           </h1>
           {this.state.subject.sub}
