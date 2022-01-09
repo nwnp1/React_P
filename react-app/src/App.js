@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TOC from './components/TOC';
 import Content from './components/Content';
-//import Subject from './components/Subject';
+import Subject from './components/Subject';
 import './App.css';
 
 
@@ -32,17 +32,13 @@ class App extends Component {
     console.log("render", this);
     return (
       <div className="App">
-      <header>
-          <h1><a href="/" onClick={function (e) {
-            console.log(e);
-            e.preventDefault();
-            this.setState({ mode: "welcome" });
-          }.bind(this)}>{this.state.subject.title}</a>
-          </h1>
-          {this.state.subject.sub}
-      </header> 
-      {/*  <Subject title={this.state.subject.title} 
-      sub={this.state.subject.sub}></Subject> */}
+        <Subject 
+          title={this.state.subject.title} 
+          sub={this.state.subject.sub}
+          onChangePage={function () {
+            this.setState({mode: 'welcome'});
+          }.bind(this)}
+        ></Subject>
         <TOC data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
       </div>
