@@ -9,7 +9,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode:'welcome',
       subject:{title:'WEB', sub:"World Wide Web!"},
+      welcome:{title:'Welcome', desc:'Hello, React!'},
       contents:[
         {id:1, title:'HTML', desc:'HTML is for ingotmation'},
         {id:2, title:'CSS', desc:'CSS is for design'},
