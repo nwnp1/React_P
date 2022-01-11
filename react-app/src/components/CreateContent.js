@@ -9,7 +9,7 @@ class CreateContent extends Component {
             <form action="/create process" method="post"
                 onSubmit={function(e) {
                     e.preventDefault();
-                    this.props.onSubmit( //d
+                    this.props.onSubmit( 
                         e.target.title.value,
                         e.target.desc.value
                     );

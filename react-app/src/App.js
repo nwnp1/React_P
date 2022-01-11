@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
-import TOC from './components/TOC';
-import ReadContent from './components/ReadContent';
-import CreateContent from './components/CreateContent';
-import Subject from './components/Subject';
-import Control from './components/Control';
+import TOC from "./components/TOC";
+import ReadContent from "./components/ReadContent";
+import CreateContent from "./components/CreateContent";
+import Subject from "./components/Subject"
+import Control from "./components/Control"
+
 import './App.css';
 
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    this.max_content_id = 3; 
     this.state = {
       mode:'read',
       selected_content_id: 2,
-      subject:{title:'WEB', sub:"World Wide Web!"},
-      welcome:{title:'Welcome', desc:'Hello, React!'},
+      subject:{title:'WEB', sub:'World Wide Web!'},
+      welcome:{title:'Welcome', desc:'Hello, React!!'},
       contents:[
-        {id:1, title:'HTML', desc:'HTML is for ingotmation'},
+        {id:1, title:'HTML', desc:'HTML is for information'},
         {id:2, title:'CSS', desc:'CSS is for design'},
-        {id:3, title:'JavaScript', desc:'JavaScript is for interactive'}        
+        {id:3, title:'JavaScript', desc:'JavaScript is for interactive'}
       ]
     }
   }
@@ -43,6 +45,13 @@ class App extends Component {
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode === 'create') {
       _article = <CreateContent onSubmit={function(_title, _desc) {
+        this.max_content_id = this.max_content_id+1;
+        this.state.contents.push(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        );
+        this.setState({
+          contents:this.state.contents
+        });
         console.log(_title, _desc);
       }.bind(this)}></CreateContent>
     }
@@ -53,16 +62,16 @@ class App extends Component {
           title={this.state.subject.title} 
           sub={this.state.subject.sub}
           onChangePage={function () {
-            this.setState({mode: 'welcome'});
+            this.setState({mode:'welcome'});
           }.bind(this)}
         ></Subject>
-        <TOC
+        <TOC 
           onChangePage={function(id) {
             this.setState({
-              mode: 'read',
+              mode:'read',
               selected_content_id:Number(id)
             });
-          }.bind(this)}        
+          }.bind(this)}          
           data={this.state.contents}></TOC>
         <Control onChangeMode={function(_mode) {
           this.setState({
