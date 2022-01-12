@@ -15,7 +15,7 @@ class Control extends Component {
             }.bind(this)}>update</a></li>
             <li><input onClick={function(e) {
                 e.preventDefault();
-                this.props.onChangeMode('delete');
+                this.props.onChangeMode('delete'); //delete버튼이 onChangeMode 함수 호출
             }.bind(this)} type="button" value="delete"></input></li>
         </ul>
       );

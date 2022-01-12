@@ -14,7 +14,7 @@ class App extends Component {
     super(props)
     this.max_content_id = 3; 
     this.state = {
-      mode:'read',
+      mode:'welcome',
       selected_content_id: 2,
       subject:{title:'WEB', sub:'World Wide Web!'},
       welcome:{title:'Welcome', desc:'Hello, React!!'},
@@ -100,11 +100,30 @@ class App extends Component {
           }.bind(this)}          
           data={this.state.contents}></TOC>
         <Control onChangeMode={function(_mode) {
-          this.setState({
+          if(_mode === 'delete') {
+            if(window.confirm('really?')) {
+              var _contents = Array.from(this.state.contents);
+              var i = 0;
+              while(i < _contents.length) {
+                if(_contents[i].id === this.state.selected_content_id) {
+                  _contents.splice(i, 1); //splice 함수는 인자로 어느 항목부터 몇 개를 지울 것인지 지정
+                  break;
+                }
+                i = i + 1;
+              }
+              this.setState({
+                mode:'welcome',
+                contents:_contents
+              });
+              alert('deleted!');
+            }
+          } else {
+            this.setState({
             mode:_mode
           });
-        }.bind(this)}></Control>
-        {this.getContent()}
+        }
+      }.bind(this)}></Control>
+      {this.getContent()}
       </div>
     );
   }
