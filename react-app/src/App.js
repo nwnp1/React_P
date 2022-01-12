@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TOC from "./components/TOC";
 import ReadContent from "./components/ReadContent";
 import CreateContent from "./components/CreateContent";
+import UpdateContent from "./components/UpdateContent";
 import Subject from "./components/Subject"
 import Control from "./components/Control"
 
@@ -24,7 +25,18 @@ class App extends Component {
       ]
     }
   }
-  render() {
+  getReadContent() {
+    var i = 0;
+    while(i < this.state.contents.length) {
+      var data = this.state.contents[i];
+      if(data.id === this.state.selected_content_id) {
+        return data;
+      }
+      i = i + 1;
+    }
+  }
+
+  getContent() {
     console.log('App render');
     var _title, _desc, _article = null;
     if(this.state.mode === 'welcome') {
@@ -32,35 +44,47 @@ class App extends Component {
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if(this.state.mode === 'read') {
-      var i = 0;
-      while(i < this.state.contents.length) {
-        var data = this.state.contents[i];
-        if(data.id === this.state.selected_content_id) {
-          _title = data.title;
-          _desc = data.desc;
-          break;
-        }
-        i = i + 1;
-      }
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+      var _content = this.getReadContent();
+      _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
     } else if(this.state.mode === 'create') {
       _article = <CreateContent onSubmit={function(_title, _desc) {
         this.max_content_id = this.max_content_id+1;
-        //var _contents = this.state.contents.concat(
-        //  {id:this.max_content_id, title:_title, desc:_desc}
-        //)
+        var _contents = this.state.contents.concat(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        );
         /* this.state.contents.push(
           {id:this.max_content_id, title:_title, desc:_desc}
         ); */
-        var newContents = Array.from(this.state.contents);
-        newContents.push({id:this.max_content_id, title:_title, desc:_desc});
+        //var newContents = Array.from(this.state.contents);
+        //newContents.push({id:this.max_content_id, title:_title, desc:_desc});
         this.setState({
-          contents:newContents
+          contents:_contents
         });
         console.log(_title, _desc);
       }.bind(this)}></CreateContent>
+    } else if(this.state.mode === 'update') {
+      var _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={function(_title, _desc) {
+        this.max_content_id = this.max_content_id+1;
+        var _contents = this.state.contents.concat(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        );
+        /* this.state.contents.push(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        ); */
+        //var newContents = Array.from(this.state.contents);
+        //newContents.push({id:this.max_content_id, title:_title, desc:_desc});
+        this.setState({
+          contents:_contents
+        });
+        console.log(_title, _desc);
+      }.bind(this)}></UpdateContent>
     }
-    console.log("render", this);
+      return _article;
+  }
+
+  render() {
+    
     return (
       <div className="App">
         <Subject 
@@ -83,7 +107,7 @@ class App extends Component {
             mode:_mode
           });
         }.bind(this)}></Control>
-        {_article}
+        {this.getContent()}
       </div>
     );
   }
