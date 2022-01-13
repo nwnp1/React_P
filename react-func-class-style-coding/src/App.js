@@ -26,12 +26,20 @@ function FuncComp(props) {
 
   //side effect
   useEffect(function() {
-    console.log('%cfunc => useEffect (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
-    document.title = number + ' : ' + _date;
+    console.log('%cfunc => useEffect number (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+    document.title = number;
     return function () {
-      console.log('%cfunc => useEffect return (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+      console.log('%cfunc => useEffect number return (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
     }
-  });
+  }, [number]); //두 번째 인자로 전달받은 배열의 요소 내의 값의 상태가 바뀌었을 때만 첫 번째 인자인 콜백 함수가 호출됨
+
+  useEffect(function() {
+    console.log('%cfunc => useEffect _date (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+    document.title = _date;
+    return function () {
+      console.log('%cfunc => useEffect _date return (componentDidMount & componentDidUpdate) '+(++funcId), funcStyle);
+    }
+  }, [_date]);
 
   console.log('%cfunc => render '+(++funcId), funcStyle);
   return (
