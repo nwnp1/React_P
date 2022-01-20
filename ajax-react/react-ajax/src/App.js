@@ -72,11 +72,11 @@ class App extends Component {
   }
   render() {
     var NavTag = null;
-    if(this.state.list.isLoading) {
+    if(this.state.list.isLoading) { 
       NavTag=<NowLoading></NowLoading>
     } else {
       NavTag = <Nav list={this.state.list.items} onClick={function(id){ //Nav 컴포넌트 내에서 id를 인자로 props에 전달받은 onClick 함수 호출
-        var newArticle = Object.assign({}, this.state.article, {isLoading:true});
+        var newArticle = Object.assign({}, this.state.article, {isLoading:true}); //로드가 시작되는 지점
         this.setState({article:newArticle});
         fetch(id+'.json') //각 id에 해당하는 JSON 파일을 읽기 위해 fetch API 사용
           .then(function(result) {
