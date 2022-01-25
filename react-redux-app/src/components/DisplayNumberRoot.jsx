@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DisplayNumber from '../components/DisplayNumber';
+import DisplayNumber from '../containers/DisplayNumber'; //이 래퍼 컴포넌트를 사용하도록 변경
 
 export default class DisplayNumberRoot extends Component {
     render() {
